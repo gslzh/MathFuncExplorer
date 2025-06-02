@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学函数探索器</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #controls { margin-bottom: 20px; }
+        #expression { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <!-- 顶部菜单栏 -->
+    <div class="menu-bar">
+        <div class="menu-left">
+            <h1 class="app-title">
+                <img src="logo.svg" alt="Logo" class="app-logo">
+                数学函数探索器
+            </h1>
+            <div class="menu-items">
+                <button class="menu-btn" onclick="downloadImage()">📥 下载图像</button>
+                <button class="menu-btn" onclick="printPage()">🖨️ 打印</button>
+                <button class="menu-btn" onclick="showAbout()">ℹ️ 关于</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于模态框 -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">关于数学函数探索器</h2>
+                <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>🚀 核心功能</h3>
+                <p>• <strong>多函数类型支持</strong>：一次函数、二次函数、幂函数、反比例函数、根式函数、绝对值函数、三角函数、指数函数、对数函数、分段函数</p>
+                <p>• <strong>实时参数调节</strong>：通过直观滑块实时调整函数参数，观察图像变化规律</p>
+                <p>• <strong>智能方程求解器</strong>：输入x值自动计算对应y值，支持复杂函数运算</p>
+                <p>• <strong>典型例题解析</strong>：内置20+精选例题，涵盖各函数类型的经典应用</p>
+                <p>• <strong>公式定理助手</strong>：点击高亮公式查看详细定理说明和应用示例</p>
+                <p>• <strong>多设备支持</strong>：完美适配桌面、平板、手机等各种设备</p>
+                
+                <h3>📚 学习价值</h3>
+                <p>• <strong>可视化学习</strong>：通过图像直观理解函数性质和变化规律</p>
+                <p>• <strong>互动式探索</strong>：实时调节参数，发现数学规律和函数特征</p>
+                <p>• <strong>知识点关联</strong>：例题与公式定理深度整合，理论与实践结合</p>
+                <p>• <strong>循序渐进</strong>：从基础函数到复杂应用的完整学习路径</p>
+                <p>• <strong>即时反馈</strong>：参数调节立即显示结果，加深理解印象</p>
+                
+                <div class="developer-highlight">
+                    <h3>👨‍💻 开发者信息</h3>
+                    <p><strong>开发者：</strong>雷雨涵</p>
+                    <p><strong>学校：</strong>兰州五十一中</p>
+                    <p><strong>班级：</strong>高一九班</p>
+                    <p><strong>联系箱：</strong><a href="mailto:3056544962@qq.com" style="color: #00d4ff; text-decoration: none;">3056544962@qq.com</a></p>
+                    <p><strong>开发时间：</strong>2025年6月</p>
+                    <p><strong>版本：</strong>V1.0 - 基础版</p>
+                </div>
+                
+
+                
+                <h3>📄 版权声明</h3>
+                <p style="font-size: 0.9rem; color: #94a3b8; line-height: 1.6;">本软件为教育学习目的开发，遵循开源精神。欢迎学习交流，但请勿用于商业用途。如有问题或建议，请通过邮箱联系作者。</p>
+                <p><strong>© 2025 数学函数探索器 - All Rights Reserved</strong></p>
+                
+                <p style="text-align: center; margin-top: 20px; color: #8b5cf6; font-weight: 600; font-size: 1.1rem;">🎓 让数学学习更有趣！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="controls">
+            <h2 class="control-title">函数控制面板</h2>
+            <label for="functionSelect">选择函数类型:</label>
+            <select id="functionSelect">
+                <option value="linear">y = a * x + b (一次函数)</option>
+                <option value="quadratic">y = a * x² + b * x + c (二次函数)</option>
+                <option value="power">y = a * x^b + c (幂函数)</option>
+                <option value="inverse">y = a / x + b (反比例函数)</option>
+                <option value="sqrt">y = a * √(b * x + c) + d (根式函数)</option>
+                <option value="abs">y = a * |b * x + c| + d (绝对值函数)</option>
+                <option value="sin">y = a * sin(b * x + c) + d (正弦函数)</option>
+                <option value="cos">y = a * cos(b * x + c) + d (余弦函数)</option>
+                <option value="tan">y = a * tan(b * x + c) + d (正切函数)</option>
+                <option value="exp">y = a * e^(b * x) + c (指数函数)</option>
+                <option value="log">y = a * ln(b * x + c) + d (对数函数)</option>
+                <option value="piecewise">分段函数 (高中典型)</option>
+            </select>
+            <div id="sliders">
+                <!-- Sliders will be dynamically added here -->
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="plot-container">
+                <canvas id="plot" width="800" height="400"></canvas>
+                <div id="expression">当前函数表达式: <span id="currentExpression"></span></div>
+            </div>
+            <div class="solver-container">
+                <h3 class="solver-title">🧮 智能方程求解器</h3>
+                <div class="input-group">
+                    <label class="input-label">📝 函数方程</label>
+                    <input type="text" class="equation-input" id="equationInput" placeholder="方程会根据选择的函数自动填充" readonly>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">📊 输入 X 值</label>
+                    <input type="number" class="x-input" id="xInput" placeholder="请输入 x 的数值" step="0.1">
+                </div>
+                <div class="result-group">
+                    <label class="result-label">📈 计算结果</label>
+                    <div class="result-display" id="result">等待计算...</div>
+                </div>
+                <button class="solve-button" id="solveBtn">🚀 计算结果</button>
+                <button onclick="clearSolver()">清除求解</button>
+                <button onclick="toggleAutoScale()" id="autoScaleBtn">自动缩放: 开启</button>
+                <button onclick="resetScale()">重置缩放</button>
+            </div>
+            
+            <!-- 典型例题展示区域 -->
+            <div class="examples-container">
+                <h3 class="examples-title">📚 典型例题解析</h3>
+                <div class="examples-filter">
+                    <button class="filter-btn" data-type="all">全部</button>
+                    <button class="filter-btn active" data-type="current">当前函数</button>
+                </div>
+                <div id="examplesList" class="examples-list">
+                    <!-- 例题将通过JavaScript动态加载 -->
+                    <div class="loading-message">正在加载例题...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 公式/定理弹窗 -->
+    <div id="formulaModal" class="modal">
+        <div class="modal-content formula-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="formulaTitle">公式/定理</h3>
+                <span class="close" onclick="closeFormulaModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="formulaContent">
+                <!-- 公式内容将动态插入 -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
