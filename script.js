@@ -300,6 +300,66 @@ function resetScale() {
     drawPlot();
 }
 
+// 清除求解器输入和结果
+function clearSolver() {
+    const xInput = document.getElementById('xInput');
+    const resultDisplay = document.getElementById('result-display');
+    const defaultResult = document.getElementById('result');
+    
+    if (xInput) {
+        xInput.value = '';
+    }
+    
+    if (resultDisplay) {
+        resultDisplay.remove();
+    }
+    
+    if (defaultResult) {
+        defaultResult.textContent = '等待计算...';
+    }
+    
+    drawPlot(); // 重新绘制图像，清除当前点
+}
+
+// 重置参数到默认值
+function resetParams() {
+    const funcType = functionSelect.value;
+    
+    // 根据函数类型设置默认参数
+    if (funcType === 'linear') {
+        params = { a: 1, b: 0 };
+    } else if (funcType === 'quadratic') {
+        params = { a: 1, b: 0, c: 0 };
+    } else if (funcType === 'power') {
+        params = { a: 1, b: 2, c: 0 };
+    } else if (funcType === 'inverse') {
+        params = { a: 1, b: 0 };
+    } else if (funcType === 'sqrt') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    } else if (funcType === 'abs') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    } else if (funcType === 'sin') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    } else if (funcType === 'cos') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    } else if (funcType === 'tan') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    } else if (funcType === 'exp') {
+        params = { a: 1, b: 1, c: 0 };
+    } else if (funcType === 'log') {
+        params = { a: 1, b: 1, c: 0, d: 0 };
+    }
+    
+    // 更新滑块显示
+    createSliders();
+    
+    // 重新绘制图像
+    drawPlot();
+    
+    // 更新方程输入框
+    updateEquationInput();
+}
+
 function drawCurrentPoint() {
     const xInput = document.getElementById('xInput');
     if (!xInput || !xInput.value) return;
