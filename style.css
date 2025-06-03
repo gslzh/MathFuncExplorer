@@ -558,16 +558,29 @@ canvas {
 
 @media (max-width: 1024px) {
     .container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 16px;
+    }
+    
+    .plot-container {
+        order: 1;
     }
     
     #controls {
         order: 2;
     }
     
+    .solver-container {
+        order: 3;
+    }
+    
+    .examples-container {
+        order: 4;
+    }
+    
     .main-content {
-        order: 1;
+        display: contents;
     }
 }
 
@@ -603,23 +616,34 @@ canvas {
         padding: 8px;
         gap: 12px;
         display: flex;
-        flex-direction: column; /* 正常顺序，使控制面板在上方 */
-    }
-    
-    #controls {
-        width: 100%;
-        margin-right: 0;
-        margin-top: 20px;
-    }
-    
-    .main-content {
         flex-direction: column;
-        width: 100%;
     }
     
     .plot-container {
+        order: 1;
         margin-right: 0;
         margin-bottom: 15px;
+    }
+    
+    #controls {
+        order: 2;
+        padding: 12px;
+    }
+    
+    .solver-container {
+        order: 3;
+        padding: 12px;
+    }
+    
+    .examples-container {
+        order: 4;
+        padding: 12px;
+        margin-top: 15px;
+        max-height: 400px;
+    }
+    
+    .main-content {
+        display: contents;
     }
     
     canvas {
@@ -631,20 +655,6 @@ canvas {
     #sliders {
         grid-template-columns: 1fr;
         gap: 10px;
-    }
-    
-    .controls {
-        padding: 12px;
-    }
-    
-    .solver-container {
-        padding: 12px;
-    }
-    
-    .examples-container {
-        padding: 12px;
-        margin-top: 15px;
-        max-height: 400px;
     }
     
     .example-card {
@@ -1001,32 +1011,6 @@ canvas {
 
 #autoScaleBtn:hover {
     background: #22c55e !important;
-}
-
-/* 参数复位按钮样式 */
-.reset-params-btn {
-    display: block;
-    margin: 15px auto 0;
-    padding: 10px 15px;
-    background: linear-gradient(135deg, #8b5cf6, #6366f1);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.95em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(139, 92, 246, 0.3);
-}
-
-.reset-params-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(139, 92, 246, 0.4);
-}
-
-.reset-params-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
 }
 
 /* 打印样式 */

@@ -300,66 +300,6 @@ function resetScale() {
     drawPlot();
 }
 
-// 清除求解器输入和结果
-function clearSolver() {
-    const xInput = document.getElementById('xInput');
-    const resultDisplay = document.getElementById('result-display');
-    const defaultResult = document.getElementById('result');
-    
-    if (xInput) {
-        xInput.value = '';
-    }
-    
-    if (resultDisplay) {
-        resultDisplay.remove();
-    }
-    
-    if (defaultResult) {
-        defaultResult.textContent = '等待计算...';
-    }
-    
-    drawPlot(); // 重新绘制图像，清除当前点
-}
-
-// 重置参数到默认值
-function resetParams() {
-    const funcType = functionSelect.value;
-    
-    // 根据函数类型设置默认参数
-    if (funcType === 'linear') {
-        params = { a: 1, b: 0 };
-    } else if (funcType === 'quadratic') {
-        params = { a: 1, b: 0, c: 0 };
-    } else if (funcType === 'power') {
-        params = { a: 1, b: 2, c: 0 };
-    } else if (funcType === 'inverse') {
-        params = { a: 1, b: 0 };
-    } else if (funcType === 'sqrt') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    } else if (funcType === 'abs') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    } else if (funcType === 'sin') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    } else if (funcType === 'cos') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    } else if (funcType === 'tan') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    } else if (funcType === 'exp') {
-        params = { a: 1, b: 1, c: 0 };
-    } else if (funcType === 'log') {
-        params = { a: 1, b: 1, c: 0, d: 0 };
-    }
-    
-    // 更新滑块显示
-    createSliders();
-    
-    // 重新绘制图像
-    drawPlot();
-    
-    // 更新方程输入框
-    updateEquationInput();
-}
-
 function drawCurrentPoint() {
     const xInput = document.getElementById('xInput');
     if (!xInput || !xInput.value) return;
@@ -728,6 +668,7 @@ function createSliders() {
         slider.max = config.max;
         slider.step = config.step;
         slider.value = config.default;
+        slider.setAttribute('data-param', config.name);
         
         slider.addEventListener('input', function() {
             const value = parseFloat(this.value);
@@ -961,6 +902,30 @@ function showResult(message, type) {
         resultDiv.style.opacity = '1';
         resultDiv.style.transform = 'translateY(0)';
     }, 100);
+}
+
+// 清除求解器功能
+function clearSolver() {
+    // 清除X值输入框
+    const xInput = document.getElementById('xInput');
+    if (xInput) {
+        xInput.value = '';
+    }
+    
+    // 重置结果显示
+    const resultElement = document.getElementById('result');
+    if (resultElement) {
+        resultElement.textContent = '等待计算...';
+    }
+    
+    // 移除结果显示区域
+    const resultDiv = document.getElementById('result-display');
+    if (resultDiv) {
+        resultDiv.remove();
+    }
+    
+    // 重绘图像，移除当前点
+    drawPlot();
 }
 
 // 初始化所有功能
@@ -1533,6 +1498,93 @@ functionSelect.onchange = function() {
     }
     onFunctionTypeChange();
 };
+
+// 添加参数复位按钮功能
+const resetParamsBtn = document.getElementById('resetParamsBtn');
+if (resetParamsBtn) {
+    resetParamsBtn.addEventListener('click', () => {
+        // 获取当前函数类型
+        const funcType = functionSelect.value;
+        
+        // 根据函数类型重置参数
+        if (funcType === 'linear') {
+            params.a = 1;
+            params.b = 0;
+        } else if (funcType === 'quadratic') {
+            params.a = 1;
+            params.b = 0;
+            params.c = 0;
+        } else if (funcType === 'power') {
+            params.a = 1;
+            params.b = 2;
+            params.c = 0;
+        } else if (funcType === 'inverse') {
+            params.a = 1;
+            params.b = 0;
+        } else if (funcType === 'sqrt') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'abs') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'sin') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'cos') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'tan') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'exp') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+        } else if (funcType === 'log') {
+            params.a = 1;
+            params.b = 1;
+            params.c = 0;
+            params.d = 0;
+        } else if (funcType === 'piecewise') {
+            params.a = 1;
+            params.b = 0;
+            params.c = 1;
+            params.d = 0;
+        }
+        
+        // 更新滑块位置
+        const sliders = document.querySelectorAll('#sliders input[type="range"]');
+        sliders.forEach(slider => {
+            const param = slider.getAttribute('data-param');
+            if (params[param] !== undefined) {
+                slider.value = params[param];
+                // 更新滑块旁边的数值显示
+                const valueDisplay = slider.nextElementSibling;
+                if (valueDisplay) {
+                    valueDisplay.textContent = params[param];
+                }
+            }
+        });
+        
+        // 更新表达式和图像
+        updateExpression();
+        drawPlot();
+        updateEquationInput();
+        
+        // 显示成功提示
+        showResult('参数已重置为默认值', 'success');
+    });
+}
 
 // 启动应用
 createSliders();

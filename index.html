@@ -56,9 +56,9 @@
                     <p><strong>开发者：</strong>雷雨涵</p>
                     <p><strong>学校：</strong>兰州五十一中</p>
                     <p><strong>班级：</strong>高一九班</p>
-                    <p><strong>联系方式：</strong><a href="mailto:3056544962@qq.com" style="color: #00d4ff; text-decoration: none;">3056544962@qq.com</a></p>
+                    <p><strong>邮箱：</strong><a href="mailto:3056544962@qq.com" style="color: #00d4ff; text-decoration: none;">3056544962@qq.com</a></p>
                     <p><strong>开发时间：</strong>2025年6月</p>
-                    <p><strong>版本：</strong>V1.0-基础版</p>
+                    <p><strong>版本：</strong>V1.0 - 基础版</p>
                 </div>
                 
 
@@ -93,7 +93,7 @@
             <div id="sliders">
                 <!-- Sliders will be dynamically added here -->
             </div>
-            <button onclick="resetParams()" class="reset-params-btn">参数复位</button>
+            <button id="resetParamsBtn" class="control-button" style="margin-top: 10px; background-color: #8b5cf6; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">🔄 复位参数</button>
         </div>
         <div class="main-content">
             <div class="plot-container">
@@ -118,7 +118,6 @@
                 <button onclick="clearSolver()">清除求解</button>
                 <button onclick="toggleAutoScale()" id="autoScaleBtn">自动缩放: 开启</button>
                 <button onclick="resetScale()">重置缩放</button>
-
             </div>
             
             <!-- 典型例题展示区域 -->
